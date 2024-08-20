@@ -1,5 +1,5 @@
 {
-  "name": "CRUD",
+  "name": "crud",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,7 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "5.18.0",
     "fastify": "^4.28.1",
+    "prisma": "^5.18.0",
     "tsx": "^4.17.0"
   },
   "devDependencies": {
