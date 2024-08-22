@@ -20,9 +20,12 @@ export const getTaskById = async (taskId: string) => {
 // Função para criar uma nova tarefa
 export const createTask = async (data: Task) => {
   return prisma.task.create({
-    data,
-  });
-};
+    data: {
+      ...data,
+      description: data.description ?? "", // Substitui undefined por uma string vazia caso não haja uma descrição
+    },
+  })
+}
 
 // Função para atualizar uma tarefa existente
 export const updateTask = async (taskId: string, data: { title?: string; description?: string }) => {

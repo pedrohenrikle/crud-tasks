@@ -1,9 +1,12 @@
 import fastify from 'fastify'
-import userRoutes from './routes/routes';
+import userRoutes from './routes/userRoutes'
+import taskRoutes from './routes/taskRoutes'
+import {fastifyJwt} from "@fastify/jwt"
 
 const server = fastify()
 
 server.register(userRoutes, { prefix: '/api' });
+server.register(taskRoutes, { prefix: '/api' });
 
 server.listen({ port: 8080 }, (err, address) => {
   if (err) {
