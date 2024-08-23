@@ -1,11 +1,11 @@
 // types/fastify.d.ts
-import 'fastify';
+import 'fastify'
 
 declare module 'fastify' {
   interface FastifyRequest {
     user: {
-      id: string;
-      email: string;
-    };
+      id: string
+      email: string
+    }
   }
 }
