@@ -7,8 +7,8 @@ export default async function userRoutes(fastify: FastifyInstance) {
 
   fastify.get('/users/all', userController.getUsers.bind(UserController));
   fastify.post('/users/login', userController.loginUser.bind(UserController));
-  fastify.get('/users/:id', {onRequest: [verifyJwt]}, userController.getUser.bind(UserController));
+  fastify.get('/users', {onRequest: [verifyJwt]}, userController.getUser.bind(UserController));
   fastify.post('/users', userController.createUser.bind(UserController));
-  fastify.put('/users/:id', {onRequest: [verifyJwt]}, userController.updateUser.bind(UserController));
-  fastify.delete('/users/:id', {onRequest: [verifyJwt]}, userController.deleteUser.bind(UserController));
+  fastify.put('/users/edit', {onRequest: [verifyJwt]}, userController.updateUser.bind(UserController));
+  fastify.delete('/users/delete', {onRequest: [verifyJwt]}, userController.deleteUser.bind(UserController));
 }

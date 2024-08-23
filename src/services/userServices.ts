@@ -45,10 +45,10 @@ export const loginUser = async (email: string, password: string, reply: FastifyR
 };
 
 // Função para obter um usuário específico pelo ID, incluindo suas tarefas associadas
-export const getUserById = async (id: string) => {
+export const getUserById = async (userId: string) => {
   return prisma.user.findUnique({
     // Busca o usuário pelo ID fornecido
-    where: { id },
+    where: { id: userId },
     // Inclui as tarefas (tasks) do usuário na resposta
     include: { tasks: true },
   });
@@ -70,12 +70,20 @@ export const createUser = async (name: string, email: string, password: string) 
 };
 
 // Função para atualizar um usuário existente
-export const updateUser = async (id: string, data: { name?: string; email?: string; passwordHash?: string }) => {
+export const updateUser = async (userId: string, data: { name?: string; email?: string; passwordHash?: string }) => {
+  let newPasswordHash: string | undefined
+
+  if (data.passwordHash) {
+    newPasswordHash = await hash(data.passwordHash, saltRounds)
+  }
+
   return prisma.user.update({
-    // Identifica o usuário pelo ID
-    where: { id },
-    // Atualiza os dados do usuário com as informações fornecidas (nome, email, hash da senha)
-    data,
+    where: { id: userId }, // Identifica o usuário pelo ID
+    data: {
+      email: data.email,
+      name: data.name,
+      passwordHash: data.passwordHash ? newPasswordHash : undefined,
+    }, // Atualiza os dados do usuário com as informações fornecidas (nome, email, hash da senha)
   });
 };
 

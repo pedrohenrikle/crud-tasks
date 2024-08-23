@@ -12,9 +12,9 @@ export class UserController {
   }
 
   async getUser(req: FastifyRequest, reply: FastifyReply): Promise<void> {
-    const { id } = req.params as { id: string };
+    const userId = req.user.id // Pega o ID do usuário pelo token JWT
     try {
-      const user = await userService.getUserById(id);
+      const user = await userService.getUserById(userId);
       if (!user) {
         reply.status(404).send({ error: 'User not found' });
         return;
@@ -48,10 +48,10 @@ export class UserController {
   }
 
   async updateUser(req: FastifyRequest, reply: FastifyReply): Promise<void> {
-    const { id } = req.params as { id: string };
+    const userId = req.user.id // Pega o ID do usuário pelo token JWT
     const { name, email, passwordHash } = req.body as { name?: string; email?: string; passwordHash?: string };
     try {
-      const updatedUser = await userService.updateUser(id, { name, email, passwordHash });
+      const updatedUser = await userService.updateUser(userId, { name, email, passwordHash });
       if (!updatedUser) {
         reply.status(404).send({ error: 'User not found' });
         return;

@@ -11,9 +11,12 @@ export const getAllTasksByUserId = async (userId: string) => {
 };
 
 // Função para obter uma tarefa específica pelo ID da tarefa
-export const getTaskById = async (taskId: string) => {
+export const getTaskById = async (userId: string, taskId: string) => {
   return prisma.task.findUnique({
-    where: { id: taskId },
+    where: { 
+      id: taskId,
+      ownerId: userId
+    },
   });
 };
 
@@ -28,16 +31,25 @@ export const createTask = async (data: Task) => {
 }
 
 // Função para atualizar uma tarefa existente
-export const updateTask = async (taskId: string, data: { title?: string; description?: string }) => {
+export const updateTask = async (userId: string, taskId: string, data: { title?: string; description?: string; isFinished?: boolean }) => {
   return prisma.task.update({
-    where: { id: taskId },
-    data,
+    where: {
+      id: taskId,
+      ownerId: userId,
+    },
+    data: {
+      title: data.title,
+      description: data.description,
+      isFinished: data.isFinished
+    },
   });
 };
-
 // Função para deletar uma tarefa pelo ID
-export const deleteTask = async (taskId: string) => {
+export const deleteTask = async (userId: string, taskId: string) => {
   return prisma.task.delete({
-    where: { id: taskId },
+    where: { 
+      id: taskId,
+      ownerId: userId
+    },
   });
 };
