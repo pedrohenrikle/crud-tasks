@@ -79,15 +79,16 @@ export class UserController {
   }
 
   async deleteUser(req: FastifyRequest, reply: FastifyReply): Promise<void> {
-    const { id } = req.params as { id: string }
+    const userId = req.user.id // Pega o ID do usuário pelo token JWT
     try {
-      const deletedUser = await userService.deleteUser(id)
+      const deletedUser = await userService.deleteUser(userId)
       if (!deletedUser) {
         reply.status(404).send({ error: 'User not found' })
         return
       }
       reply.send(deletedUser)
     } catch (error) {
+      console.log(error)
       reply.status(500).send({ error: 'Failed to delete user' })
     }
   }

@@ -20,6 +20,6 @@ model Task {
   title       String
   description String
   isFinished  Boolean
-  owner       User    @relation(fields: [ownerId], references: [id])
+  owner       User    @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId     String
 }

@@ -102,9 +102,9 @@ export const updateUser = async (
 }
 
 // Função para deletar um usuário pelo ID
-export const deleteUser = async (id: string) => {
+export const deleteUser = async (userId: string) => {
   return prisma.user.delete({
     // Identifica o usuário pelo ID e o deleta
-    where: { id },
+    where: { id: userId },
   })
 }
