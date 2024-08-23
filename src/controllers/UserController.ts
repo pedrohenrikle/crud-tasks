@@ -28,10 +28,22 @@ export class UserController {
   async createUser(req: FastifyRequest, reply: FastifyReply): Promise<void> {
     const { name, email, passwordHash } = req.body as { name: string; email: string, passwordHash: string };
     try {
-      const newUser = await userService.createUser({ name, email, passwordHash });
+      const newUser = await userService.createUser(name, email, passwordHash);
       reply.status(201).send(newUser);
     } catch (error) {
+      console.log(error)
       reply.status(500).send({ error: 'Failed to create user' });
+    }
+  }
+
+  async loginUser(req: FastifyRequest, reply: FastifyReply): Promise<void> {
+    const { email, password } = req.body as { email: string, password: string };
+    try {
+      const loggedUserToken = await userService.loginUser(email, password, reply);
+      reply.status(200).send(loggedUserToken);
+    } catch (error) {
+      console.log(error)
+      reply.status(500).send({ error: 'Failed to log-in user' });
     }
   }
 
