@@ -36,6 +36,8 @@ export const loginUser = async (email: string, password: string, reply: FastifyR
   const token = await reply.jwtSign({
     id: user.id,
     email: user.email
+  }, {
+    expiresIn: "1h"
   })
 
   // Retorna o token gerado
