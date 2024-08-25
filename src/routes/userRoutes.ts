@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { FastifyInstance } from 'fastify'
 import { UserController } from '../controllers/UserController'
 import { verifyJwt } from '../middlewares/AuthJWT'

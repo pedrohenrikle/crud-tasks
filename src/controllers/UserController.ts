@@ -26,13 +26,13 @@ export class UserController {
   }
 
   async createUser(req: FastifyRequest, reply: FastifyReply): Promise<void> {
-    const { name, email, passwordHash } = req.body as {
+    const { name, email, password } = req.body as {
       name: string
       email: string
-      passwordHash: string
+      password: string
     }
     try {
-      const newUser = await userService.createUser(name, email, passwordHash)
+      const newUser = await userService.createUser(name, email, password)
       reply.status(201).send(newUser)
     } catch (error) {
       console.log(error)
